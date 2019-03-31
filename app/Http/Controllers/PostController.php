@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Post;
 use App\Tag;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class PostController extends Controller
 {
@@ -27,7 +28,9 @@ class PostController extends Controller
      */
     public function create()
     {
-        //
+        $tags = Tag::all();
+        \Debugbar::info($tags);
+        return view('post.create', ['tags' => $tags]);
     }
 
     /**
@@ -38,7 +41,18 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $post = new Post();
+        $post->user_id = Auth::user()->id;
+        $post->title = $request->input('title');
+        $post->content = $request->input('content');
+        $post->save();
+
+        foreach ($request->tags as $tag) {
+            $post->tags()->attach((int)$tag);
+        }
+
+
+        return redirect(route('post.index'));
     }
 
     /**

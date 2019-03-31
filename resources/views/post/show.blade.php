@@ -3,7 +3,13 @@
 @section('content')
     <div class="container">
         <h2 class="blog-post-title">{{ $post->title }}t</h2>
-        <p class="blog-post-meta">{{ $post->created_at }} by <a href="#">{{$post->user->name}}</a></p>
+        <p class="blog-post-meta">{{ $post->created_at }} by
+            @if(isset($post->user))
+                {{$post->user->name}}
+            @else
+                Deleted User
+            @endif
+        </p>
         <ul class="list-inline">
             @foreach($post->tags as $tag)
                 <li class="list-inline-item">
