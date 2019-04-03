@@ -71,10 +71,11 @@ class PostController extends Controller
      *
      * @param  int $id
      * @return \Illuminate\Http\Response
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function edit($id)
     {
-        //
+        $this->authorize('edit', Auth::user());
     }
 
     /**
@@ -83,10 +84,11 @@ class PostController extends Controller
      * @param  \Illuminate\Http\Request $request
      * @param  int $id
      * @return \Illuminate\Http\Response
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function update(Request $request, $id)
     {
-        //
+        $this->authorize('update', Auth::user());
     }
 
     /**
@@ -94,10 +96,11 @@ class PostController extends Controller
      *
      * @param  int $id
      * @return \Illuminate\Http\Response
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function destroy($id)
     {
-        //
+        $this->authorize('destroy', Auth::user());
     }
 
     public function search(Tag $tag)

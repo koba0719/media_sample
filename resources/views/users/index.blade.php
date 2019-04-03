@@ -12,8 +12,13 @@
                             {{-- Admin以外は自分以外のデータを編集削除できない --}}
                             @if(!Auth::user()->is_admin)
                                 @if($user->id === Auth::user()->id)
-                                    <button class="btn-primary">編集</button>
-                                    <button class="btn-danger">削除</button>
+                                    <button class="btn-primary" onclick="location.href='user/{{ $user->id }}/edit'">編集</button>
+
+                                    <form action="{{ url('user/'.$user->id) }}" method="post">
+                                        @csrf
+                                        @method("DELETE")
+                                        <button type="submit" class="btn-danger">削除</button>
+                                    </form>
                                 @endif
                             @else
                                 <button class="btn-primary" onclick="location.href='user/{{ $user->id }}/edit'">編集</button>
